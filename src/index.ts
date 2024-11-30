@@ -98,7 +98,7 @@ export function formatDateTime(date: Date | null | undefined, dateFormat?: strin
   }
   return sd + " " + formatTime(date)
 }
-export function formatLongDateTime(date: Date | null | undefined, dateFormat?: string, full?: boolean, upper?: boolean): string {
+export function formatLongDateTime(date: Date | null | undefined, dateFormat?: string, full?: boolean, upper?: boolean): any {
   if (!date) {
     return et
   }
@@ -108,7 +108,7 @@ export function formatLongDateTime(date: Date | null | undefined, dateFormat?: s
   }
   return sd + " " + formatLongTime(date)
 }
-export function formatFullDateTime(date: Date | null | undefined, dateFormat?: string, s?: string, full?: boolean, upper?: boolean): string {
+export function formatFullDateTime(date: Date | null | undefined, dateFormat?: string, s?: string, full?: boolean, upper?: boolean): any {
   if (!date) {
     return et
   }
