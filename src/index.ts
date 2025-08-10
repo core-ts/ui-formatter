@@ -145,8 +145,8 @@ function pad3(n: number): string {
   return n < 10 ? "00" + n : "0" + n.toString()
 }
 
-export function formatNumber(v: number, scale?: number, d?: string | null, g?: string): any {
-  if (!v) {
+export function formatNumber(v?: number | null, scale?: number, d?: string | null, g?: string): any {
+  if (v == null) {
     return ""
   }
   if (!d && !g) {
