@@ -14,7 +14,8 @@
     "removeComments": true,
     "lib": [
       "es5",
-      "es6"
+      "es6",
+      "ES2016"
     ]
   },
   "include": [

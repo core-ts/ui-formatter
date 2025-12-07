@@ -247,3 +247,19 @@ export function formatPhone(phone?: string | null): string {
 export function formatFax(fax?: string | null): string {
   return formatter.formatFax(fax)
 }
+
+export function isChecked(v: boolean | string | undefined | null, s: string[] | string | undefined): string {
+  if (!v) {
+    return ""
+  }
+  if (typeof v === "boolean") {
+    return v ? "checked" : ""
+  } else if (s) {
+    if (Array.isArray(s)) {
+      return s.includes(v) ? "checked" : ""
+    } else {
+      return s === v ? "checked" : ""
+    }
+  }
+  return ""
+}
