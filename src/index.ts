@@ -248,6 +248,9 @@ export function formatFax(fax?: string | null): string {
   return formatter.formatFax(fax)
 }
 
+export function isNotEmpty(arr: any[] | string | null | undefined): boolean {
+  return arr ? arr.length > 0 : false
+}
 export function isChecked(v: boolean | string | undefined | null, s: string[] | string | undefined): string {
   if (!v) {
     return ""
