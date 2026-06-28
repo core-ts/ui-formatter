@@ -253,8 +253,8 @@ export function formatNumber(v?: number | null, precision = 0, decimalSeparator?
 // tslint:disable-next-line:class-name
 export class formatter {
   // private static _preg = / |\+|\-|\.|\(|\)/g;
-  static fax = / |\-|\.|\(|\)/g
-  static phone = / |\-|\.|\(|\)/g
+  // static fax = / |\-|\.|\(|\)/g
+  // static phone = / |\-|\.|\(|\)/g
   static usPhone = /(\d{3})(\d{3})(\d{4})/
   static formatPhone(phone?: string | null): string {
     if (!phone) {
@@ -263,7 +263,7 @@ export class formatter {
     // reformat phone number
     // 555 123-4567 or (+1) 555 123-4567
     let s = phone
-    const x = removePhoneFormat(phone)
+    const x = normalizePhone(phone)
     if (x.length === 10) {
       const USNumber = x.match(formatter.usPhone)
       if (USNumber != null) {
@@ -289,7 +289,7 @@ export class formatter {
     // reformat phone number
     // 035-456745 or 02-1234567
     let s = fax
-    const x = removePhoneFormat(fax)
+    const x = normalizeFax(fax)
     const l = x.length
     if (l <= 6) {
       s = x
@@ -311,11 +311,23 @@ export class formatter {
     return s
   }
 }
-export function removePhoneFormat(phone?: string): string {
-  return phone ? phone.replace(formatter.phone, "") : ""
+export function normalizePhone(s?: string | null): string {
+  if (!s) {
+    return ""
+  }
+  const len = s.length
+  const buf = new Array<string>(len)
+  let j = 0
+  for (let i = 0; i < len; i++) {
+    const c = s.charCodeAt(i)
+    if ((c >= 48 && c <= 57) || c === 43) {
+      buf[j++] = s[i]
+    }
+  }
+  return j === len ? buf.join("") : buf.slice(0, j).join("")
 }
-export function removeFaxFormat(fax?: string): string {
-  return fax ? fax.replace(formatter.fax, "") : ""
+export function normalizeFax(fax?: string): string {
+  return normalizePhone(fax)
 }
 export function formatPhone(phone?: string | null): string {
   return formatter.formatPhone(phone)
