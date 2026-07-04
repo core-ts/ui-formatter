@@ -200,7 +200,7 @@ export function formatNumber(v?: number | null, precision = 0, decimalSeparator?
   const negative = v < 0
 
   // unavoidable allocation
-  const s = Math.abs(v).toFixed(precision)
+  const s = precision < 0 ? Math.abs(v).toString() : Math.abs(v).toFixed(precision)
 
   const dot = s.indexOf(".")
 
@@ -283,32 +283,7 @@ export class formatter {
     return s
   }
   static formatFax(fax?: string | null): string {
-    if (!fax) {
-      return ""
-    }
-    // reformat phone number
-    // 035-456745 or 02-1234567
-    let s = fax
-    const x = normalizeFax(fax)
-    const l = x.length
-    if (l <= 6) {
-      s = x
-    } else {
-      if (x.substring(0, 2) !== "02") {
-        if (l <= 9) {
-          s = `${x.substring(0, l - 6)}-${x.substring(l - 6, l)}`
-        } else {
-          s = `${x.substring(0, l - 9)}-${x.substring(l - 9, l - 6)}-${x.substring(l - 6, l)}`
-        }
-      } else {
-        if (l <= 9) {
-          s = `${x.substring(0, l - 7)}-${x.substring(l - 7, l)}`
-        } else {
-          s = `${x.substring(0, l - 9)}-${x.substring(l - 9, l - 7)}-${x.substring(l - 7, l)}`
-        }
-      }
-    }
-    return s
+    return formatter.formatPhone(fax)
   }
 }
 export function normalizePhone(s?: string | null): string {
